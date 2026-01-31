@@ -1,0 +1,10 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Data files (για να μην ανέβει το json μας αργότερα κατά λάθος, αν θέλουμε να είναι τοπικό)
+data.json
