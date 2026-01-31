@@ -6,9 +6,15 @@ def add_expense():
     and adds the expense to the list.
     """
     description = input("What did you buy? ")
-    # This line will crash if text is entered (Bug to be fixed later)
-    amount = float(input("Enter amount: ")) 
     
+    # Simple error handling for amount
+    while True:
+        try:
+            amount = float(input("Enter amount: "))
+            break
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+
     expense = {
         "description": description,
         "amount": amount
@@ -28,6 +34,24 @@ def show_expenses():
             print(f"{i + 1}. {expense['description']}: {expense['amount']}€")
     print("-------------------\n")
 
+def delete_expense():
+    """
+    Asks the user to select an expense ID and removes it.
+    """
+    show_expenses()
+    if not expenses:
+        return
+
+    try:
+        choice = int(input("Enter the number of the expense to delete: "))
+        if 1 <= choice <= len(expenses):
+            removed = expenses.pop(choice - 1)
+            print(f"Deleted: {removed['description']}")
+        else:
+            print("Invalid number.")
+    except ValueError:
+        print("Please enter a valid number.")
+
 def main():
     print(f"=== Budget Buddy v{VERSION} ===")
     
@@ -35,16 +59,19 @@ def main():
         print("\n-------- MENU --------")
         print("1. Add Expense")
         print("2. View Expenses")
-        print("3. Exit")
+        print("3. Delete Expense")  
+        print("4. Exit")
         print("----------------------")
         
-        choice = input("Choose an option (1-3): ")
+        choice = input("Choose an option (1-4): ")
         
         if choice == "1":
             add_expense()
         elif choice == "2":
             show_expenses()
         elif choice == "3":
+            delete_expense() 
+        elif choice == "4":
             print("Goodbye!")
             break
         else:
